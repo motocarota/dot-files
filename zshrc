@@ -1,327 +1,196 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':omz:module:editor' keymap 'emacs'
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
-# Auto convert .... to ../..
-zstyle ':omz:module:editor' dot-expansion 'yes'
+# export variables for tiny-care-terminal
+# see https://github.com/notwaldorf/tiny-care-terminal/
 
-# Set case-sensitivity for completion, history lookup, etc.
-zstyle ':omz:*:*' case-sensitive 'no'
+# TTC_BOTS
+# are the 3 twitter bots to check, comma separated. The first entry in this list will be displayed in the party parrot.
 
-# Color output (auto set to 'no' on dumb terminals).
-zstyle ':omz:*:*' color 'yes'
+export TTC_REPOS="$HOME/var"
+# a comma separated list of repos to look at for git commits. This is using git-standup under the hood, and looks one subdirectory deep
 
-# Auto set the tab and window titles.
-zstyle ':omz:module:terminal' auto-title 'no'
+export TTC_WEATHER=16043
+# the location or zip code to check the weather for (so both 90210 and Paris should work)
 
-# Set the Zsh modules to load (man zshmodules).
-# zstyle ':omz:load' zmodule 'attr' 'stat'
+export TTC_APIKEYS=false
+# set this to false if you don't want to use Twitter API keys and want to scrape the tweets instead.
 
-# Set the Zsh functions to load (man zshcontrib).
-zstyle ':omz:load' zfunction 'zargs' 'zmv'
+export TTC_UPDATE_INTERVAL=5
+# set this to change the update frequency in minutes, default is 20 minutes.
 
-# Set the Oh My Zsh modules to load (browse modules).
-# The order matters.
-#   * 'environment' should be first.
-#   * 'completion' must be after 'utility'.
-#   * 'syntax-highlighting' should be next to last, but, it must be
-#      before 'history-substring-search'.
-#   * 'prompt' should be last
-zstyle ':omz:load' omodule \
-    'environment' \
-    'terminal' \
-    'editor' \
-    'history' \
-    'directory' \
-    'spectrum' \
-    'utility' \
-    'completion' \
-    'git' \
-    'osx' \
-    'syntax-highlighting' \
-    'history-substring-search' \
-    'prompt'
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="amuse"
+# ZSH_THEME="agnoster"
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME="bureau"
+# ZSH_THEME="gentoo"
 
-# Set the prompt theme to load.
-# Setting it to 'random' loads a random theme.
-# Auto set to 'off' on dumb terminals.
-zstyle ':omz:module:prompt' theme 'steeef'
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-# This will make you shout: OH MY ZSHELL!
-source "$OMZ/init.zsh"
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+HYPHEN_INSENSITIVE="true"
 
-# Exclude svn from prompt lookups entirely
-zstyle ':vcs_info:*' enable git
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-# Customize to your needs...
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
-umask 022
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-# no shared history, keep history per session
-setopt no_share_history
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# after ssh, set the title back to local host's name
-ssh() {
-    if [[ -x /usr/local/bin/ssh ]]; then
-        /usr/local/bin/ssh $@
-    else
-        /usr/bin/ssh $@
-    fi
-    set-window-title $(uname -n)
-    set-tab-title $(uname -n)
-}
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# After mosh, set the title back to local host's name.
-# If mosh does not connect, fall back to ssh.
-#mosh() {
-#    /usr/local/bin/mosh $@
-#    if [[ $? = 0 ]]; then
-#        set-window-title $(uname -n)
-#        set-tab-title $(uname -n)
-#    else
-#        echo "***"
-#        echo "*** Unable to connect to mosh server, fall back to ssh."
-#        echo "***"
-#        ssh $@
-#    fi
-#}
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
 
-alias vi='vim'
-alias view='vim -R'
-alias vimdiff='vimdiff -O'
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-alias c='clear'
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="dd.mm.yyyy"
 
-# print the directory structure from the current directory in tree format
-alias dirf="find . -type d|sed -e 's/[^-][^\/]*\//  |/g' -e 's/|\([^ ]\)/|-\1/'"
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Show me time in GMT / UTC
-alias utc='TZ=UTC date'
-alias gmt='TZ=GMT date'
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
 
-# Time in different places
-alias jpdate='TZ=Asia/Tokyo date'
-alias nldate='TZ=Europe/Amsterdam date'
-alias fidate='TZ=Europe/Finland date'
+source $ZSH/oh-my-zsh.sh
 
-# show me platform info
-alias os='uname -srm'
+# User configuration
 
-# translate AS/RR numbers
-astr() { echo "$1" | tr '[A-J0-9]' '[0-9A-J]' }
+# export MANPATH="/usr/local/man:$MANPATH"
 
-# show me installed version of a perl module
-alias pmver="perl -le '\$m = shift; eval qq(require \$m) \
-    or die qq(module \"\$m\" is not installed\\n); \
-    print \$m->VERSION'"
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
 
-# tell me if a perl module has a method
-pmhas() {
-    local __module="$1"
-    local __method="$2"
-    [[ -n "__method" ]] || { echo 'Usage: pmhas <module> <method>'; return; }
-    local __result=$(perl -M$__module -e "print ${__module}->can('$__method');")
-    [[ $__result =~ 'CODE' ]] && echo "$__module has $__method"
-}
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
-# sleep this long, then beep
-beep() {
-    local __timer=0
-    [[ -n "$1" ]] && __timer=$1
-    until [[ $__timer = 0 ]]; do
-        printf "  T minus $__timer     \r"
-        __timer=$((__timer - 1))
-        sleep 1
-    done
-    echo '- BEEP! -    \a\r'
-}
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-# make a project directory
-mkproj() {
-    local _usage='Usage: mkproj <desc> [<ticket>]'
-    [[ -z "$1" || "$1" =~ '^(-h|--help)' ]] && { echo $_usage; return }
-    local _dir
-    local _date=$(date +'%Y%m%d')
-    local _name="$1"
-    local _suffix
-    [[ -n "$2" ]] && _suffix="-${2}"
-    _dir="${_date}-${_name}${_suffix}"
-    [[ -d ~/$_dir ]] && { echo 'already exists!'; return }
-    mkdir ~/$_dir && cd ~/$_dir
-}
+# ssh
+export SSH_KEY_PATH="~/.ssh/github_rsa"
+# ssh-add ~/.ssh/github_rsa
 
-# find a project directory
-proj() {
-    local _usage='Usage: proj [<pattern>]'
-    [[ "$1" =~ '^(-h|--help)' ]] && { echo $_usage; return }
-    # If there's no pattern, go to the most recent project.
-    [[ -z "$1" ]] && { cd ~/(19|20)[0-9][0-9][01][0-9][0-3][0-9]-*(/om[1]); return }
-    local _this
-    local _choice=0
-    local _index=1
-    local _projects
-    typeset -a _projects
-    _projects=()
-    for _this in ~/(19|20)[0-9][0-9][01][0-9][0-3][0-9]-*$1*; do
-        [[ -d $_this ]] && _projects+=$_this
-    done 2>/dev/null
-    [[ $#_projects -eq 0 ]] && { echo 'No match.'; return }
-    [[ $#_projects -eq 1 ]] && { cd $_projects[1]; return }
-    for _this in $_projects[1,-2]; do
-        echo "  [$_index] $(basename $_this)"
-        _index=$(( $_index + 1 ))
-    done
-    echo "* [$_index] \e[0;31;47m$(basename $_projects[-1])\e[0m"
-    echo
-    until [[ $_choice -ge 1 && $_choice -le $#_projects ]]; do
-        printf 'select> '
-        read _choice
-        [[ -z "$_choice" ]] && { cd $_projects[-1]; return }
-    done
-    cd $_projects[$_choice]
-}
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias ohmyzsh="sublime ~/.oh-my-zsh"
 
-# count something fed in on stdin
-alias count='sort | uniq -c | sort -n'
-
-# Strip comment / blank lines from an output
-alias stripcomments="egrep -v '^([\ \t]*#|$)'"
-
-alias ack='ack --smart-case'
-
-# Give me a list of the RPM package groups
-alias rpmgroups='cat /usr/share/doc/rpm-*/GROUPS'
-
-# Get my current public IP
-alias get-ip='curl --silent http://icanhazip.com'
-
-# less with no-wrap (oh-my-zsh default, could be useful sometimes)
-alias less-nowrap='less -S'
-
-# magic mv
-# mmv *.c.orig orig/*.c
 alias mmv='noglob zmv -W'
+alias nvpatch='npm version patch'
+alias nvminor='npm version minor'
+alias nvmajor='npm version major'
+alias ns='clear && npm start'
+alias ni='clear && npm install'
+alias nb'clear && npm run build'
+alias l='ls -FlASh'
+alias did="vim +'normal Go' +'r!date' ~/did.txt"
+alias wc-project="find . -name \"*.js\" -print0 | xargs -0 wc -l"
+alias watip="curl 'https://api.ipify.org?format=json'"
+alias ver='$SCRIPTS_PATH/bfx/showAllVersions.sh .'
+alias npx='echo'
+alias cdd='cd ../..'
+alias cddd='cd ../../..'
+alias meteo='clear && curl http://v2.wttr.in/lavagna'
+alias nri='rm -rf node_modules && npm install'
+alias nris='rm -rf node_modules && npm install && npm start'
+#alias gpus='git pull && git pull usptream staging && git submodule update'
 
-# globbing cheat sheet
-globcheat() {
+# files/projects locations
+export MY_SCRIPTS_PATH="$HOME/scripts"
+export BITFINEX_PATH="$HOME/bitfinex"
+export WEBAPP_PATH="$BITFINEX_PATH/webapp"
+export SCRIPTS_PATH="$BITFINEX_PATH/bfx-ui-scripts"
+export TEMP_CHANGES_FILE="$BITFINEX_PATH/.pending-bfxft-changes.tmp"
+export TEMP_PR_WA_FILE="$BITFINEX_PATH/.pending-webapp-changes.tmp"
+export ENABLE_LOCAL_OUTPUT=1
 
-    echo
-    echo '**/ recurse   ***/ follow symlinks   class: [...]   neg: [^...] or [!...]'
-    echo
-    echo '/ dir  . file  * exec  @ symlink  = socket  p pipe  % device %b block %c char'
-    echo
-    echo 'r u:read   w u:write   x u:exec   U owner-is-my-uid   u123 owner is uid 123'
-    echo 'A g:read   I g:write   E g:exec   G group-is-my-gid   u:dan: owner is dan'
-    echo 'R o:read   W o:write   X o:exec                       or g123, g:dan:'
-    echo
-    echo 'm mtime   default period is days    + or - a value      mw-1 in past week'
-    echo 'a atime   M month  w week  h hour  m minute  s second   aM-1 in past month'
-    echo
-    echo 'L file size (bytes)   k kbytes  m mbytes  p blocks   Lm+1 = larger than 1mb'
-    echo
-    echo '*(u0WLk+10m0) owner root, world write, > 10KB, mtime in past hour'
+# custom shell scripts
+alias halp='less $SCRIPTS_PATH/README.md'
+alias prl='$SCRIPTS_PATH/pr/list.sh'
+alias prf='$SCRIPTS_PATH/pr/ft.sh'
+alias prwa='$SCRIPTS_PATH/pr/webapp.sh'
+alias prp='$SCRIPTS_PATH/pr/public.sh'
+alias unbump='$SCRIPTS_PATH/unbump.sh'
+alias postRelease='$SCRIPTS_PATH/post_release/run.sh'
+alias tr='$MY_SCRIPTS_PATH/translate.sh'
+alias code='codium'
+# TODO use the aliases folder to avoid this shit
 
+function git_dig {
+  git log --pretty=format:'%Cred%h%Creset - %Cgreen(%ad)%Creset - %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short -G"$1" -- $2
 }
 
-alias cless='colordiff | less'
+#
+# Hooks
+#
 
-alias pywebserver='python -m SimpleHTTPServer'
-# python 3 version:
-# python3 -m http.server 8000
+autoload -U add-zsh-hook
 
-# 6core.net pasteboard
-6p() {
-    curl -k -F "content=<${1--}" -F ttl=604800 -w "%{redirect_url}\n" \
-        -o /dev/null https://p.6core.net/
+function -auto-ls-after-cd() {
+  emulate -L zsh
+  # Only in response to a user-initiated `cd`, not indirectly (eg. via another
+  # function).
+  if [ "$ZSH_EVAL_CONTEXT" = "toplevel:shfunc" ]; then
+    clear
+    pwd
+    l
+  fi
 }
+add-zsh-hook chpwd -auto-ls-after-cd
 
-# fix ssh setup in a reattached tmux environment
-fixssh() {
-    for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
-        if (tmux show-environment | grep "^${key}" > /dev/null); then
-            value=`tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//"`
-            export ${key}="${value}"
-        fi
-    done
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# source /usr/local/etc/bash_completion.d/password-store
+autoload -U zmv
+
+# pulls everything from a repo
+function gpu () {
+	local branch=${1:-staging}
+	git pull origin "$branch"
+	git pull origin "$branch" --tags
+
+	git pull upstream "$branch"
+	git pull upstream "$branch" --tags
+
+	git submodule update --recursive --init
 }
+export PATH="/opt/homebrew/bin:$PATH"
 
-alias d='docker'
-alias dc='docker-compose'
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
 
-# http://perlbrew.pl
-if [ -f ~/perl5/perlbrew/etc/bashrc ]; then
-    source ~/perl5/perlbrew/etc/bashrc
-fi
-
-if [[ $UID -eq 0 ]]; then
-
-    ### Things to do only if I am root
-
-    # Messes with rdist and probably other stuff
-    unset SSH_AUTH_SOCK
-
-else
-
-    ### Things to do only if I am not root
-
-    set-window-title $(uname -n)
-    set-tab-title $(uname -n)
-
-    [[ -f ~/.rbenv/bin/rbenv ]] && eval "$(rbenv init -)"
-
-    # No longer using these
-    #mkdir -p ~/.vim/tmp/{backup,swap,undo}
-
-    if [[ -n "$(command -v tmux)" ]]; then
-
-        alias tmux='tmux -u'
-
-        tmux_ls() {
-            echo "\n-- tmux sessions --\n$(tmux ls 2>/dev/null)"
-        }
-
-        # List tmux sessions
-        if [[ -z "$TMUX" && -n "$(tmux ls 2>/dev/null)" ]]; then
-            tmux_ls
-        fi
-
-        # tmux magic alias to list, show, or attach
-        t() {
-            [[ -z "$1" ]] && { tmux_ls; return }
-            local _detach_flag
-            if [[ "$1" = "-d" ]]; then
-                _detach_flag="-d"
-                shift
-            fi
-            export STY="[$1] $(uname -n)"
-            set-window-title $STY
-            set-tab-title $STY
-            tmux -u new -s "$1" || tmux -u att $_detach_flag -t "$1"
-            set-window-title $(uname -n)
-            set-tab-title $(uname -n)
-        }
-
-    fi
-
-fi
-
-# Mac-specific things
-if [[ "$(uname -s)" = "Darwin" ]]; then
-
-    #battery_charge_meter() { $HOME/.scripts/laptop_battery_charge }
-    #export RPROMPT='$(battery_charge_meter)'
-
-    alias ql='qlmanage -p "$@" >& /dev/null'
-    # telnet is no longer shipped with macOS
-    #alias telnet='/usr/bin/telnet -K'
-    alias ldd='otool -L'
-
-    # This shows which processes are using the network right now.
-    alias netusers='lsof -P -i -n | cut -f 1 -d " " | uniq'
-
-fi
-
-# local settings override global ones
-[[ -s $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
-
-__zshrc_load_complete=1
+# ICG env vars
+export ICG_SERVER_URL="http:\/\/localhost:4300"
